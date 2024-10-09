@@ -1,0 +1,1048 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Global Political Evolution: The Future of Governance</title>
+    <link rel="icon" type="images/x-icon" href="https://cdn.icon-icons.com/icons2/4217/PNG/512/earth_planet_icon_263082.png">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/ScrollTrigger.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&family=Orbitron:wght@400;700&display=swap');
+
+        :root {
+            --primary: #00ffff;
+            --secondary: #0080ff;
+            --accent: #ff00ff;
+            --background: #000033;
+            --text: #ffffff;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', sans-serif;
+            color: var(--text);
+            background-color: var(--background);
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background-color: rgba(0,0,51,0.8);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            transition: all 0.3s ease;
+        }
+
+        header.scrolled {
+            background-color: rgba(0,0,51,0.95);
+            box-shadow: 0 5px 20px rgba(0,255,255,0.2);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav ul {
+            list-style-type: none;
+            display: flex;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav ul li {
+            margin-right: 1.5rem;
+        }
+
+        nav ul li a {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+
+        .login-btn {
+            background-color: var(--primary);
+            color: var(--background);
+            padding: 0.5rem 1.5rem;
+            border-radius: 25px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .login-btn:hover {
+            background-color: var(--secondary);
+            box-shadow: 0 0 20px var(--secondary);
+            transform: translateY(-3px);
+        }
+
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        #video-background {
+            position: fixed;
+            right: 0;
+            bottom: 0;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            z-index: -1000;
+            background-size: cover;
+            opacity: 0.3;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 4.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 10px rgba(0,255,255,0.5);
+            background: linear-gradient(45deg, var(--primary), var(--secondary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .hero p {
+            font-size: 1.8rem;
+            margin-bottom: 2rem;
+            opacity: 0;
+        }
+
+        .cta-btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background-color: var(--primary);
+            color: var(--background);
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            opacity: 0;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .cta-btn:hover {
+            background-color: var(--secondary);
+            box-shadow: 0 0 20px var(--secondary);
+            transform: translateY(-3px);
+        }
+
+        .section {
+            padding: 8rem 0;
+            position: relative;
+        }
+
+        .section h2 {
+            font-size: 3.5rem;
+            margin-bottom: 3rem;
+            text-align: center;
+            color: var(--primary);
+            text-shadow: 0 0 10px rgba(0,255,255,0.3);
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+        }
+
+        .card {
+            background-color: rgba(255,255,255,0.05);
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+            transform: rotate(45deg);
+            transition: all 0.5s ease;
+            opacity: 0;
+        }
+
+        .card:hover::before {
+            opacity: 1;
+            transform: rotate(45deg) translate(50%, 50%);
+        }
+
+        .card:hover {
+            transform: translateY(-10px) scale(1.03);
+            box-shadow: 0 20px 30px rgba(0,255,255,0.2);
+        }
+
+        .card img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 1.5rem;
+            border: 3px solid var(--primary);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover img {
+            transform: scale(1.1) rotate(5deg);
+            border-color: var(--secondary);
+        }
+
+        .card h3 {
+            margin: 0.5rem 0;
+            font-size: 1.5rem;
+            color: var(--primary);
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .card p {
+            margin: 0;
+            color: #ccc;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        .timeline {
+            position: relative;
+            max-width: 1200px;
+            margin: 100px auto;
+        }
+
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 6px;
+            background-color: var(--primary);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -3px;
+        }
+
+        .timeline-item {
+            padding: 10px 40px;
+            position: relative;
+            background-color: inherit;
+            width: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .timeline-item:hover {
+            transform: scale(1.05);
+        }
+
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            right: -17px;
+            background-color: var(--background);
+            border: 4px solid var(--primary);
+            top: 15px;
+            border-radius: 50%;
+            z-index: 1;
+        }
+
+        .left {
+            left: 0;
+        }
+
+        .right {
+            left: 50%;
+        }
+
+        .right::after {
+            left: -16px;
+        }
+
+        .timeline-content {
+            padding: 20px 30px;
+            background-color: rgba(255,255,255,0.05);
+            position: relative;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .timeline-details {
+            display: none;
+            margin-top: 10px;
+            padding: 10px;
+            background-color: rgba(255,255,255,0.1);
+            border-radius: 5px;
+        }
+
+        .stats-container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin-top: 4rem;
+        }
+
+        .stat-item {
+            text-align: center;
+            margin: 2rem;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: bold;
+            color: var(--primary);
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .stat-label {
+            font-size: 1.2rem;
+            color: var(--text);
+            margin-top: 0.5rem;
+        }
+
+        .quote-section {
+            background-color: rgba(0,0,51,0.7);
+            padding: 6rem 0;
+            text-align: center;
+        }
+
+        .quote {
+            font-size: 2rem;
+            font-style: italic;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .quote-author {
+            margin-top: 2rem;
+            font-size: 1.2rem;
+            color: var(--primary);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+
+        .feature-item {
+            background-color: rgba(255,255,255,0.05);
+            border-radius: 10px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .feature-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0,255,255,0.2);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .feature-title {
+            font-size: 1.5rem;
+            color: var(--text);
+            margin-bottom: 1rem;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .feature-description {
+            font-size: 1rem;
+            color: #ccc;
+        }
+
+        footer {
+            background-color: rgba(0,0,51,0.9);
+            color: var(--text);
+            padding: 4rem 0;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+        }
+
+        .footer-grid h3 {
+            margin-bottom: 1.5rem;
+            font-size: 1.4rem;
+            color: var(--primary);
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .footer-grid ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .footer-grid ul li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-grid ul li a {
+            color: var(--text);
+            text-decoration: none;
+            font-size: 1rem;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .footer-grid ul li a::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background-color: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        .footer-grid ul li a:hover::after {
+            width: 100%;
+        }
+
+        #globe-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.2;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .network-lines {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .newsletter-form {
+            display: flex;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+
+        .newsletter-input {
+            padding: 0.5rem 1rem;
+            font-size: 1rem;
+            border: none;
+            border-radius: 25px 0 0 25px;
+            width: 300px;
+        }
+
+        .newsletter-btn {
+            background-color: var(--primary);
+            color: var(--background);
+            border: none;
+            padding: 0.5rem  1rem;
+            
+            font-size: 1rem;
+            border-radius: 0 25px 25px 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .newsletter-btn:hover {
+            background-color: var(--secondary);
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 3rem;
+            }
+
+            .hero p {
+                font-size: 1.2rem;
+            }
+
+            .section h2 {
+                font-size: 2.5rem;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            .timeline::after {
+                left: 31px;
+            }
+
+            .timeline-item {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 25px;
+            }
+
+            .timeline-item::before {
+                left: 60px;
+                border: medium solid white;
+                border-width: 10px 10px 10px 0;
+                border-color: transparent white transparent transparent;
+            }
+
+            .left::after, .right::after {
+                left: 15px;
+            }
+
+            .right {
+                left: 0%;
+            }
+
+            .newsletter-form {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .newsletter-input {
+                width: 100%;
+                max-width: 300px;
+                border-radius: 25px;
+                margin-bottom: 1rem;
+            }
+
+            .newsletter-btn {
+                width: 100%;
+                max-width: 300px;
+                border-radius: 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="globe-container"></div>
+    <header>
+        <nav class="container">
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#systems">Systems</a></li>
+                <li><a href="#timeline">Timeline</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <a href="#" class="login-btn">Login</a>
+        </nav>
+    </header>
+
+    <section class="hero" id="home">
+        <video id="video-background" autoplay loop muted>
+            <source src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/planet-background-Aw9xtXBXBXPXXXXXXXXXXXXXXXXXXX.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <canvas class="network-lines"></canvas>
+        <div class="hero-content">
+            <h1 class="floating">Global Political Evolution</h1>
+            <p>Shaping the Future of Governance</p>
+            <a href="#about" class="cta-btn">Explore the Future</a>
+        </div>
+    </section>
+
+    <section class="section" id="about">
+        <div class="container">
+            <h2>Empowering Citizens Through Innovation</h2>
+            <div class="grid">
+                <div class="card">
+                    <img src="https://cdn.leonardo.ai/users/a3fb5f9f-5b7b-421c-aa96-3d5de4d0da69/generations/7904153f-0cea-473b-b955-d72591b70b7e/Leonardo_Lightning_XL_Presidents_of_the_United_States_France_P_3.jpg?w=512" alt="AI Governance">
+                    <h3>AI Governance</h3>
+                    <p>Leveraging artificial intelligence for fair and efficient decision-making in the digital age.</p>
+                </div>
+                <div class="card">
+                    <img src="https://cdn.leonardo.ai/users/a3fb5f9f-5b7b-421c-aa96-3d5de4d0da69/generations/7904153f-0cea-473b-b955-d72591b70b7e/Leonardo_Lightning_XL_Presidents_of_the_United_States_France_P_2.jpg" alt="Blockchain Voting">
+                    <h3>Blockchain Voting</h3>
+                    <p>Ensuring transparent, secure, and tamper-proof electoral processes using distributed ledger technology.</p>
+                </div>
+                <div class="card">
+                    <img src="https://cdn.leonardo.ai/users/a3fb5f9f-5b7b-421c-aa96-3d5de4d0da69/generations/7904153f-0cea-473b-b955-d72591b70b7e/Leonardo_Lightning_XL_Presidents_of_the_United_States_France_P_1.jpg" alt="Virtual Parliaments">
+                    <h3>Virtual Parliaments</h3>
+                    <p>Enabling global collaboration and representation through immersive digital environments.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="systems">
+        <div class="container">
+            <h2>Evolving Political Systems</h2>
+            <div class="grid">
+                <div class="card">
+                    <img src="https://cdn.leonardo.ai/users/a3fb5f9f-5b7b-421c-aa96-3d5de4d0da69/generations/7904153f-0cea-473b-b955-d72591b70b7e/Leonardo_Lightning_XL_Presidents_of_the_United_States_France_P_0.jpg" alt="Technocracy">
+                    <h3>Technocracy</h3>
+                    <p>A system of governance where decision-makers are selected based on their expertise in their fields of responsibility.</p>
+                </div>
+                <div class="card">
+                    <img src="https://cdn.leonardo.ai/users/a3fb5f9f-5b7b-421c-aa96-3d5de4d0da69/generations/982ff1b3-ceab-4409-9c86-fb2dad8bc2c4/Leonardo_Lightning_XL_Presidents_of_the_United_States_France_P_3.jpg" alt="Liquid Democracy">
+                    <h3>Liquid Democracy</h3>
+                    <p>A flexible form of democracy combining direct and representative democracy through dynamic vote delegation.</p>
+                </div>
+                <div class="card">
+                    <img src="https://cdn.leonardo.ai/users/a3fb5f9f-5b7b-421c-aa96-3d5de4d0da69/generations/982ff1b3-ceab-4409-9c86-fb2dad8bc2c4/Leonardo_Lightning_XL_Presidents_of_the_United_States_France_P_0.jpg" alt="AI-Assisted Governance">
+                    <h3>AI-Assisted Governance</h3>
+                    <p>A hybrid system that combines human wisdom with artificial intelligence to optimize decision-making processes.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="quote-section">
+        <div class="container">
+            <blockquote class="quote">
+                "The future of governance lies not in the systems of the past, but in the innovative technologies and collaborative spirit of the present."
+            </blockquote>
+            <p class="quote-author">- Dr. Amelia Futurist, Political Scientist</p>
+        </div>
+    </section>
+
+    <section class="section" id="timeline">
+        <div class="container">
+            <h2>Evolution of Political Systems</h2>
+            <div class="timeline">
+                <div class="timeline-item left">
+                    <div class="timeline-content">
+                        <h2>Ancient Democracies</h2>
+                        <p>The birth of democracy in ancient Greece and Rome.</p>
+                        <div class="timeline-details">
+                            <p>Ancient Greek democracy emerged in the city-state of Athens around 500 BCE. Citizens directly participated in the city's governance through the assembly.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-item right">
+                    <div class="timeline-content">
+                        <h2>Feudal Systems</h2>
+                        <p>The rise of monarchies and feudalism in medieval Europe.</p>
+                        <div class="timeline-details">
+                            <p>Feudalism was a hierarchical system of land ownership and duties. It flourished in Europe between the 9th and 15th centuries.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-item left">
+                    <div class="timeline-content">
+                        <h2>Constitutional Monarchies</h2>
+                        <p>The evolution of absolute monarchies into constitutional monarchies.</p>
+                        <div class="timeline-details">
+                            <p>Constitutional monarchies began to emerge in the 17th and 18th centuries, limiting the power of monarchs and establishing parliaments.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-item right">
+                    <div class="timeline-content">
+                        <h2>Modern Democracies</h2>
+                        <p>The spread of democratic systems across the globe.</p>
+                        <div class="timeline-details">
+                            <p>Modern democracies, characterized by universal suffrage and regular elections, became widespread in the 20th century.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-item left">
+                    <div class="timeline-content">
+                        <h2>Digital Governance</h2>
+                        <p>The integration of technology in political systems and decision-making processes.</p>
+                        <div class="timeline-details">
+                            <p>Digital governance leverages technology to enhance transparency, efficiency, and citizen participation in the 21st century.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-item right">
+                    <div class="timeline-content">
+                        <h2>Future Systems</h2>
+                        <p>Emerging forms of governance leveraging AI, blockchain, and global connectivity.</p>
+                        <div class="timeline-details">
+                            <p>Future political systems may incorporate AI-assisted decision-making, blockchain-based voting, and global digital parliaments.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="features">
+        <div class="container">
+            <h2>Key Features of Future Governance</h2>
+            <div class="features-grid">
+                <div class="feature-item">
+                    <div class="feature-icon">🌐</div>
+                    <h3 class="feature-title">Global Connectivity</h3>
+                    <p class="feature-description">Seamless collaboration across borders and cultures.</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🤖</div>
+                    <h3 class="feature-title">AI Integration</h3>
+                    <p class="feature-description">Intelligent systems supporting human decision-making.</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🔒</div>
+                    <h3 class="feature-title">Enhanced Security</h3>
+                    <p class="feature-description">Advanced cryptography ensuring data integrity and privacy.</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">📊</div>
+                    <h3 class="feature-title">Real-time Analytics</h3>
+                    <p class="feature-description">Instant insights for informed policy-making.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <h2>Global Impact</h2>
+            <div class="stats-container">
+                <div class="stat-item">
+                    <div class="stat-number" id="countries-count">0</div>
+                    <div class="stat-label">Countries Adopting New Systems</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="citizens-count">0</div>
+                    <div class="stat-label">Citizens Empowered</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="efficiency-increase">0</div>
+                    <div class="stat-label">Increase in Governance Efficiency</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <h3>Global Systems</h3>
+                    <ul>
+                        <li><a href="#">Monarchy</a></li>
+                        <li><a href="#">Republic</a></li>
+                        <li><a href="#">Democracy</a></li>
+                        <li><a href="#">Technocracy</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>Future Politics</h3>
+                    <ul>
+                        <li><a href="#">AI Governance</a></li>
+                        <li><a href="#">Blockchain Voting</a></li>
+                        <li><a href="#">Virtual Parliaments</a></li>
+                        <li><a href="#">Global Citizenship</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>Research</h3>
+                    <ul>
+                        <li><a href="#">Political Science</a></li>
+                        <li><a href="#">Data Analytics</a></li>
+                        <li><a href="#">Futurism</a></li>
+                        <li><a href="#">Technology Ethics</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>Connect</h3>
+                    <ul>
+                        <li><a href="#">Newsletter</a></li>
+                        <li><a href="#">Virtual Events</a></li>
+                        <li><a href="#">Global Forums</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="newsletter-form">
+                <input type="email" placeholder="Enter your email" class="newsletter-input">
+                <button class="newsletter-btn">Subscribe</button>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Three.js Globe
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.getElementById('globe-container').appendChild(renderer.domElement);
+
+        const geometry = new THREE.SphereGeometry(5, 64, 64);
+        const texture = new THREE.TextureLoader().load('https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-ppAVm4c7eQYpXGjEPLGrPb5LQ8FpS3.png');
+        const material = new THREE.MeshPhongMaterial({ 
+            map: texture,
+            bumpMap: texture,
+            bumpScale: 0.05,
+            specularMap: texture,
+            specular: new THREE.Color('grey')
+        });
+        const globe = new THREE.Mesh(geometry, material);
+        scene.add(globe);
+
+        const light = new THREE.PointLight(0xffffff, 1, 100);
+        light.position.set(10, 10, 10);
+        scene.add(light);
+
+        camera.position.z = 15;
+
+        function animate() {
+            requestAnimationFrame(animate);
+            globe.rotation.y += 0.002;
+            renderer.render(scene, camera);
+        }
+        animate();
+
+        // Scroll-based zoom
+        function updateCameraPosition() {
+            const scrollY = window.scrollY;
+            const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+            const scrollProgress = scrollY / maxScroll;
+            const targetZ = 15 - scrollProgress * 10; // Zoom from 15 to 5
+            camera.position.z = THREE.MathUtils.lerp(camera.position.z, targetZ, 0.1);
+        }
+
+        // GSAP Animations
+        gsap.registerPlugin(ScrollTrigger);
+
+        gsap.from('.hero h1', { opacity: 0, y: 50, duration: 1, delay: 0.5 });
+        gsap.from('.hero p', { opacity: 0, y: 50, duration: 1, delay: 0.8 });
+        gsap.from('.cta-btn', { opacity: 0, y: 50, duration: 1, delay: 1.1 });
+
+        gsap.utils.toArray('.card').forEach((card, i) => {
+            gsap.from(card, {
+                opacity: 0,
+                y: 100,
+                rotation: 5,
+                duration: 0.8,
+                scrollTrigger: {
+                    trigger: card,
+                    start: 'top 80%',
+                    end: 'top 20%',
+                    scrub: 1,
+                }
+            });
+        });
+
+        gsap.utils.toArray('.timeline-item').forEach((item, i) => {
+            gsap.from(item, {
+                opacity: 0,
+                x: i % 2 === 0 ? -100 : 100,
+                duration: 1,
+                scrollTrigger: {
+                    trigger: item,
+                    start: 'top 80%',
+                    end: 'top 20%',
+                    scrub: 1,
+                }
+            });
+        });
+
+        // Network Lines Animation
+        const canvas = document.querySelector('.network-lines');
+        const ctx = canvas.getContext('2d');
+        let width, height, particles;
+
+        function init() {
+            resize();
+            createParticles();
+            animate();
+        }
+
+        function resize() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        }
+
+        function createParticles() {
+            particles = [];
+            const numParticles = 100;
+
+            for (let i = 0; i < numParticles; i++) {
+                particles.push({
+                    x: Math.random() * width,
+                    y: Math.random() * height,
+                    radius: Math.random() * 2 + 1,
+                    vx: Math.random() * 2 - 1,
+                    vy: Math.random() * 2 - 1
+                });
+            }
+        }
+
+        function drawParticles() {
+            ctx.clearRect(0, 0, width, height);
+            ctx.fillStyle = 'rgba(0, 255, 255, 0.5)';
+            ctx.lineWidth = 0.5;
+            ctx.strokeStyle = 'rgba(0, 255, 255, 0.5)';
+
+            particles.forEach(particle => {
+                ctx.beginPath();
+                ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
+                ctx.fill();
+
+                particles.forEach(particle2 => {
+                    const dist = Math.sqrt(Math.pow(particle.x - particle2.x, 2) + Math.pow(particle.y - particle2.y, 2));
+                    if (dist < 100) {
+                        ctx.beginPath();
+                        ctx.moveTo(particle.x, particle.y);
+                        ctx.lineTo(particle2.x, particle2.y);
+                        ctx.stroke();
+                    }
+                });
+
+                particle.x += particle.vx;
+                particle.y += particle.vy;
+
+                if (particle.x < 0 || particle.x > width) particle.vx = -particle.vx;
+                if (particle.y < 0 || particle.y > height) particle.vy = -particle.vy;
+            });
+        }
+
+        function animate() {
+            drawParticles();
+            requestAnimationFrame(animate);
+        }
+
+        init();
+        window.addEventListener('resize', resize);
+
+        // Smooth Scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+            updateCameraPosition();
+        });
+
+        // Parallax effect
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const parallaxElements = document.querySelectorAll('.floating');
+            parallaxElements.forEach(el => {
+                const speed = 0.5;
+                el.style.transform = `translateY(${scrolled * speed}px)`;
+            });
+        });
+
+        // Add interactivity to timeline
+        document.querySelectorAll('.timeline-content').forEach(item => {
+            item.addEventListener('click', () => {
+                const details = item.querySelector('.timeline-details');
+                if (details.style.display === 'none' || details.style.display === '') {
+                    details.style.display = 'block';
+                    gsap.from(details, { opacity: 0, y: 20, duration: 0.5 });
+                } else {
+                    gsap.to(details, { opacity: 0, y: 20, duration: 0.5, onComplete: () => details.style.display = 'none' });
+                }
+            });
+        });
+
+        // Animate statistics
+        function animateValue(id, start, end, duration) {
+            let startTimestamp = null;
+            const step = (timestamp) => {
+                if (!startTimestamp) startTimestamp = timestamp;
+                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                const value = Math.floor(progress * (end - start) + start);
+                document.getElementById(id).textContent = value;
+                if (progress < 1) {
+                    window.requestAnimationFrame(step);
+                }
+            };
+            window.requestAnimationFrame(step);
+        }
+
+        const statsObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateValue("countries-count", 0, 50, 2000);
+                    animateValue("citizens-count", 0, 1000000000, 2000);
+                    animateValue("efficiency-increase", 0, 85, 2000);
+                    statsObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        statsObserver.observe(document.querySelector('.stats-container'));
+    </script>
+</body>
+</html>
